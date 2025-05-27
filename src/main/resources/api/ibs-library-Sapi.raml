@@ -1,0 +1,83 @@
+#%RAML 1.0
+title: Ibs-library-Sapi
+version: 1.0
+baseUri: www.twitter.com
+mediaType: 
+- application/json
+protocols:
+  - HTTP
+
+traits:
+  headerInfo: !include /exchange_modules/e28b1056-fd3b-4c9c-8a6e-690b26b38556/common-headers/1.0.0/common-headers.raml
+  queryParams: !include /exchange_modules/e28b1056-fd3b-4c9c-8a6e-690b26b38556/queryparams-books-traits/1.0.0/queryparams-books-traits.raml
+
+types:
+  201-response: !include DataType/201-dataType.raml
+  404-error: !include DataType/404.dataType.raml  
+  get-libraries : !include DataType/get-libraries-dataType.raml
+  post-book-request: !include DataType/create-book-req-dataType.raml
+  get-libraryId : !include DataType/get-libraryId-dataType.raml
+
+/libraries:
+  get:
+    is:
+    - headerInfo  
+    responses:
+      200:
+        body:
+          application/json:
+            type: get-libraries           
+      404:
+        body:
+          application/json:
+            type: 404-error
+
+  /{libraryId}:
+    get:
+      is:
+      - headerInfo 
+      responses:
+        200:
+          body: 
+            application/json:    
+              type: get-libraryId
+        404:
+          body:
+            application/json:
+              type: 404-error
+           
+/books:
+  post:
+    description: this resource is used to add a new book into database  
+    is:
+      - headerInfo
+    body:
+      application/json:
+        description: request body for the create book method 
+        type: post-book-request 
+    responses:
+      201:
+        body: 
+          application/json:    
+            type: 201-response          
+      404:
+        body:
+          application/json:
+            type: 404-error
+              
+  get:
+    description: get book details based on query parameter rating and library code
+    is:
+      - headerInfo
+      - queryParams   
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/get-book-info-based-on-rating.raml  
+      404:
+        body:
+          application/json:
+            type: 404-error
+
+
