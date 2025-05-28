@@ -14,11 +14,11 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 
     <apikit:config name="ibs-library-Sapi-config" api="ibs-library-Sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e8eaff27-879c-4e78-a736-5f49e566e157" >
-		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="${http.readTimeOut}"/>
+		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="${http.readTimeout}"/>
 	</http:listener-config>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="cd6b79ac-fa45-4e70-b489-82fd2838891f" >
 		<db:my-sql-connection host="${DB.host}" port="${DB.port}" user="${DB.user}" password="${DB.password}" database="${DB.databaseName}" />
 	</db:config>
-	<api-gateway:autodiscovery apiId="${Api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="10f14175-73d4-46e2-b6e6-e88b1e28b35a" flowRef="ibs-library-Sapi-main" />
-
+<!-- 	<api-gateway:autodiscovery apiId="${Api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="10f14175-73d4-46e2-b6e6-e88b1e28b35a" flowRef="ibs-library-Sapi-main" />
+ -->
 </mule>

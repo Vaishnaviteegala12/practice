@@ -1,7 +1,7 @@
 http:
- port: '8081'
+ port: '8081'   
  path: '/api/*'
- readTimeOut: '30000'
+ readTimeout: '30000'
  
 DB:
  host: 'bo2dphq4bmh6frvsokkh-mysql.services.clever-cloud.com'
