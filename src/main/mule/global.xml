@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="5805575d-7f49-457b-9bfb-300d8f91438e" file="properties/${env}.yaml" />
+
+    <apikit:config name="ibs-library-Sapi-config" api="ibs-library-Sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e8eaff27-879c-4e78-a736-5f49e566e157" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="${http.readTimeOut}"/>
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="cd6b79ac-fa45-4e70-b489-82fd2838891f" >
+		<db:my-sql-connection host="${DB.host}" port="${DB.port}" user="${DB.user}" password="${DB.password}" database="${DB.databaseName}" />
+	</db:config>
+</mule>

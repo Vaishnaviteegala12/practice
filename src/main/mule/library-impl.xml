@@ -4,9 +4,7 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
-	<db:config name="Database_Config" doc:name="Database Config" doc:id="526c74d9-f710-49f1-a621-529733738761" >
-		<db:my-sql-connection host="bo2dphq4bmh6frvsokkh-mysql.services.clever-cloud.com" port="3306" user="uluvojhuaic3tu1x" password="ZRoXYsPcpD8E8T5n1tPX" database="bo2dphq4bmh6frvsokkh" />
-	</db:config>
+
 	<flow name="library-implFlow" doc:id="82d01d69-c85d-485c-92ba-a3de0ae0947f" >
 		<db:select doc:id="fe2dc429-5292-4c09-8be3-77a2f48260cf" config-ref="Database_Config">
 			<db:sql ><![CDATA[SELECT * FROM LibraryDetails]]></db:sql>
