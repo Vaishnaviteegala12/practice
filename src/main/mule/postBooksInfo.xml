@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="postBooksInfoFlow" doc:id="2d5807b1-87ff-463f-8339-8c8712cbbbb4" >
+		<db:insert doc:name="Insert" doc:id="9de26590-0490-4dfb-98c8-1d8822a1bf7a" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql ><![CDATA[INSERT INTO booksInfo (libraryCode, author, rating) VALUES (:libraryCode, :author, :rating)]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+  libraryCode : payload.libraryCode,
+  author : payload.author,
+  rating : payload.rating
+}]]]></db:input-parameters>
+			<db:auto-generated-keys-column-indexes >
+				<db:auto-generated-keys-column-index value="0" />
+			</db:auto-generated-keys-column-indexes>
+			<db:auto-generated-keys-column-names >
+				<db:auto-generated-keys-column-name value="libraryCode" />
+			</db:auto-generated-keys-column-names>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="17961bad-52cb-4686-977b-373b68ef14a2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "result": "book added successfully",
+    'bookCode': payload.generatedKeys
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getBooksDetailsBasedonRating" doc:id="3cdfa1ff-b278-4c5b-887a-64ff2ca2c304" >
+		<ee:transform doc:name="inputQueryparams" doc:id="32093ca8-a005-4690-bc06-0505e003dc2b" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="ratingVar" ><![CDATA[attributes.queryParams.rating as Number]]></ee:set-variable>
+				<ee:set-variable variableName="libraryCodeVar" ><![CDATA[attributes.queryParams.libraryCode]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:select doc:name="getBooksDetailsBasedonRating" doc:id="fbab2abf-4c68-4443-a8b9-ff91249a9769" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * FROM booksInfo WHERE libraryCode = :lCode AND rating = :rating ]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	lCode: vars.libraryCodeVar,
+	rating: vars.ratingVar
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="responsePayload" doc:id="0424c0f2-4a18-4b5c-8b2b-2595cd42e92b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

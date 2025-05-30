@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 
-	<flow name="library-implFlow" doc:id="82d01d69-c85d-485c-92ba-a3de0ae0947f" >
-		<db:select doc:id="fe2dc429-5292-4c09-8be3-77a2f48260cf" config-ref="Database_Config">
+	<flow name="getLibrariesSubFlow" doc:id="82d01d69-c85d-485c-92ba-a3de0ae0947f" >
+		<db:select doc:id="fe2dc429-5292-4c09-8be3-77a2f48260cf" config-ref="Database_Config" doc:name="getLibraries">
 			<db:sql ><![CDATA[SELECT * FROM LibraryDetails]]></db:sql>
 		</db:select>
+		<ee:transform doc:name="listLibrariesResponse" doc:id="2cc73674-ed45-48ce-88d5-d218641c06ab" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="listLibrariesVar" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<set-payload value="#[vars.listLibrariesVar]" doc:name="Set Payload" doc:id="4c207d94-38e6-44bd-8781-62f58d3c3296" />
+	</flow>
+	<flow name="getLibraryById" doc:id="02bbfcdf-a66e-478f-8a3e-6b005b7e8d6b" >
+		<db:select doc:name="get library details by Id" doc:id="4facad22-86ec-46a1-82b1-286b2280f763" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from LibraryDetails where libraryCode=:Lid]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	Lid: vars.libraryId
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="get libraries by Id response payload" doc:id="211fae73-4561-4718-b56c-2237bfb5a3a6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 	</flow>
 </mule>

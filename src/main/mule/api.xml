@@ -14,34 +14,12 @@
         <apikit:router config-ref="ibs-library-Sapi-config" />
     </flow>
     <flow name="get:\books:ibs-library-Sapi-config">
-        <logger level="INFO" doc:name="Logger" doc:id="dd5c908b-7004-4134-8281-d419c3b11b30" message="###### get books flow"/>
-		<ee:transform doc:name="Transform Message">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-	result: 'list of books flow'
-}
- 
- ]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
+        <logger level="INFO" doc:name="startLogger" doc:id="dd5c908b-7004-4134-8281-d419c3b11b30" message="###### get books flow"/>
+		<flow-ref doc:name="getBooksDetailsBasedonRating" doc:id="36b26010-bd20-482a-b721-37807e033b05" name="getBooksDetailsBasedonRating"/>
     </flow>
     <flow name="get:\libraries:ibs-library-Sapi-config">
         <logger level="INFO" doc:name="Logger" doc:id="1a1c093c-34c0-4f50-b286-bf301b4e03ac" message="######## list of libraries"/>
-		<ee:transform doc:name="Transform Message">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-	result: 'list of libraries flow'
-}
- 
- ]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
+		<flow-ref doc:name="getLibrariesSubFlow" doc:id="a0da97e7-5afc-44c1-9b0b-d2f019720656" name="getLibrariesSubFlow"/>
     </flow>
     <flow name="get:\libraries\(libraryId):ibs-library-Sapi-config">
 		<ee:transform doc:name="Transform Message">
@@ -50,28 +28,10 @@ output application/json
             </ee:variables>
         </ee:transform>
 		<logger level="INFO" message="######## get library based on library ID" />
-		<ee:transform doc:name="Transform Message" doc:id="6bf90488-b35f-4c44-a349-0026728697ff" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-{
-	result: 'get library details based on ID'
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
+		<flow-ref doc:name="getLibraryById" doc:id="4b1ed3c9-6ca8-4de6-8b56-975f45052057" name="getLibraryById"/>
     </flow>
     <flow name="post:\books:application\json:ibs-library-Sapi-config">
-        <ee:transform doc:name="Transform Message" doc:id="40145034-be53-43c4-a65e-93e66f85ff06" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-{
-	result: 'to create new book'
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
 		<logger level="INFO" message="######## to create new book" />
+		<flow-ref doc:name="postBooksInfoFlow" doc:id="80345eef-a68c-4534-a514-b6ec4c1a950b" name="postBooksInfoFlow"/>
     </flow>
 </mule>

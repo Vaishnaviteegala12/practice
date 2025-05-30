@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<configuration-properties doc:name="Configuration properties" doc:id="5805575d-7f49-457b-9bfb-300d8f91438e" file="properties/${env}.yaml" />
 
-    <apikit:config name="ibs-library-Sapi-config" api="ibs-library-Sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="ibs-library-Sapi-config" api="api\ibs-library-Sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e8eaff27-879c-4e78-a736-5f49e566e157" >
 		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="${http.readTimeout}"/>
 	</http:listener-config>
@@ -20,5 +20,5 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 		<db:my-sql-connection host="${DB.host}" port="${DB.port}" user="${DB.user}" password="${DB.password}" database="${DB.databaseName}" />
 	</db:config>
 <!-- 	<api-gateway:autodiscovery apiId="${Api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="10f14175-73d4-46e2-b6e6-e88b1e28b35a" flowRef="ibs-library-Sapi-main" />
- -->
+ --> 
 </mule>
