@@ -8,7 +8,7 @@
     <db:config name="Database_Config" doc:name="Database Config" doc:id="cd6b79ac-fa45-4e70-b489-82fd2838891f">
         <db:my-sql-connection host="${DB.host}" port="${DB.port}" user="${DB.user}" password="${DB.password}" database="${DB.databaseName}" />
     </db:config>
-    <!-- 	<api-gateway:autodiscovery apiId="${Api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="10f14175-73d4-46e2-b6e6-e88b1e28b35a" flowRef="ibs-library-Sapi-main" />
- -->
+   	<api-gateway:autodiscovery apiId="${Api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="10f14175-73d4-46e2-b6e6-e88b1e28b35a" flowRef="ibs-library-Sapi-main" />
+
     <configuration doc:name="Configuration" doc:id="c24f7ae9-9d7f-4925-b8d4-4d9956eabf17" defaultErrorHandler-ref="globalErrorHandler" />
 </mule>
