@@ -4,9 +4,6 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<flow name="errorHandlingFlow" doc:id="3a9c680c-12a9-4a13-80cd-a6172e975b14" >
-		<try doc:name="Try" doc:id="257aab16-babc-4e42-b29f-99b433f883a9" />
-	</flow>
 	<error-handler name="globalErrorHandler" doc:id="efc63812-e0c2-4266-835b-a09f8df564c6" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="8ccf4381-3d61-45a1-950e-9b926de2d5c2" type="DB:CONNECTIVITY">
 			<logger level="INFO" doc:name="errorLogger" doc:id="eb362fe4-0712-4620-97fa-c22b4766577c" message="### error handling flow"/>
